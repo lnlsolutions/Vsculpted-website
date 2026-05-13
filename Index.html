@@ -1,962 +1,328 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>VSculpted | Luxury Body Sculpting Studio</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VSculpted | Luxury Body Sculpting</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --cream: #fff1f5;
-    --warm-white: #fffafd;
-    --sand: #f1cbd6;
-    --taupe: #e3a6ba;
-    --bronze: #c76f91;
-    --deep: #070607;
-    --mid: #171113;
-    --text: #27151c;
-    --light-text: #8b6371;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Jost', sans-serif;
-    background: var(--warm-white);
-    color: var(--text);
-    overflow-x: hidden;
-  }
-
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 22px 60px;
-    transition: background 0.4s, backdrop-filter 0.4s;
-  }
-  nav.scrolled {
-    background: rgba(255,250,253,0.94);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--sand);
-  }
-  .nav-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.7rem;
-    font-weight: 300;
-    letter-spacing: 0.12em;
-    color: var(--warm-white);
-    text-decoration: none;
-    transition: color 0.4s;
-  }
-  nav.scrolled .nav-logo { color: var(--deep); }
-  .nav-links { display: flex; gap: 38px; list-style: none; }
-  .nav-links a {
-    font-size: 0.7rem;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.85);
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-  nav.scrolled .nav-links a { color: var(--light-text); }
-  .nav-links a:hover { color: var(--taupe); }
-  .nav-cta {
-    font-size: 0.65rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    padding: 10px 26px;
-    border: 1px solid rgba(255,255,255,0.5);
-    color: var(--warm-white);
-    text-decoration: none;
-    transition: all 0.3s;
-  }
-  nav.scrolled .nav-cta {
-    border-color: var(--taupe);
-    color: var(--bronze);
-  }
-  .nav-cta:hover {
-    background: var(--taupe);
-    color: var(--warm-white) !important;
-    border-color: var(--taupe);
-  }
-
-  #hero {
-    position: relative;
-    height: 100vh;
-    min-height: 700px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    overflow: hidden;
-  }
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background-image: url('https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1800&q=80');
-    background-size: cover;
-    background-position: center 30%;
-    transform: scale(1.05);
-    animation: heroScale 8s ease-out forwards;
-  }
-  @keyframes heroScale { to { transform: scale(1); } }
-  .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.68) 0%, rgba(30,10,18,0.42) 48%, rgba(0,0,0,0.78) 100%);
-  }
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 850px;
-    padding: 0 30px;
-    opacity: 0;
-    animation: fadeUp 1.2s 0.4s ease forwards;
-  }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .hero-eyebrow {
-    font-size: 0.65rem;
-    font-weight: 400;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--taupe);
-    margin-bottom: 22px;
-    display: block;
-  }
-  .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3.5rem, 8vw, 7rem);
-    font-weight: 300;
-    line-height: 1.0;
-    color: var(--warm-white);
-    letter-spacing: 0.04em;
-    margin-bottom: 28px;
-  }
-  .hero-title em { font-style: italic; color: var(--taupe); }
-  .hero-subtitle {
-    font-size: 0.85rem;
-    font-weight: 300;
-    letter-spacing: 0.15em;
-    color: rgba(255,255,255,0.78);
-    margin-bottom: 50px;
-    line-height: 1.8;
-  }
-  .hero-btns { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
-  .btn-primary, .btn-ghost {
-    padding: 16px 42px;
-    font-size: 0.68rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: all 0.3s;
-    display: inline-block;
-  }
-  .btn-primary { background: var(--taupe); color: var(--warm-white); font-weight: 500; }
-  .btn-primary:hover { background: var(--bronze); }
-  .btn-ghost { border: 1px solid rgba(255,255,255,0.45); color: var(--warm-white); font-weight: 400; }
-  .btn-ghost:hover { background: rgba(255,255,255,0.1); }
-
-  section { padding: 100px 60px; }
-  .section-label {
-    font-size: 0.6rem;
-    font-weight: 500;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--taupe);
-    margin-bottom: 14px;
-    display: block;
-  }
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.2rem, 4vw, 3.4rem);
-    font-weight: 300;
-    line-height: 1.15;
-    color: var(--deep);
-    margin-bottom: 20px;
-  }
-  .section-title em { font-style: italic; color: var(--bronze); }
-  .section-desc {
-    font-size: 0.88rem;
-    font-weight: 300;
-    line-height: 1.9;
-    color: var(--light-text);
-    max-width: 540px;
-  }
-
-  #about {
-    background: var(--cream);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-    padding: 120px 80px;
-  }
-  .about-image-wrap { position: relative; }
-  .about-image-wrap img { width: 100%; height: 560px; object-fit: cover; display: block; }
-  .about-badge {
-    position: absolute;
-    bottom: -24px;
-    right: -24px;
-    background: var(--deep);
-    color: var(--warm-white);
-    padding: 30px;
-    text-align: center;
-    min-width: 140px;
-    border: 1px solid var(--taupe);
-  }
-  .about-badge .num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.8rem;
-    font-weight: 300;
-    line-height: 1;
-    display: block;
-    color: var(--taupe);
-  }
-  .about-badge .lbl {
-    font-size: 0.58rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    opacity: 0.85;
-    margin-top: 6px;
-    display: block;
-  }
-  .about-pillars {
-    margin-top: 40px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 22px;
-  }
-  .pillar { border-left: 2px solid var(--sand); padding-left: 16px; }
-  .pillar h4 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    font-weight: 400;
-    color: var(--deep);
-    margin-bottom: 6px;
-  }
-  .pillar p {
-    font-size: 0.75rem;
-    font-weight: 300;
-    color: var(--light-text);
-    line-height: 1.6;
-  }
-
-  #services, #pricing { background: var(--warm-white); padding: 100px 60px; }
-  .services-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 60px;
-    gap: 40px;
-  }
-  .services-grid, .services-grid-2 {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2px;
-    background: var(--sand);
-  }
-  .services-grid-2 { margin-top: 2px; }
-  .service-card {
-    background: var(--warm-white);
-    position: relative;
-    overflow: hidden;
-  }
-  .service-card-img {
-    width: 100%;
-    height: 280px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.6s ease;
-    filter: brightness(0.9) saturate(0.85);
-  }
-  .service-card:hover .service-card-img { transform: scale(1.06); filter: brightness(0.75); }
-  .service-card-body {
-    padding: 24px 22px 28px;
-    border-bottom: 3px solid transparent;
-    transition: border-color 0.3s;
-  }
-  .service-card:hover .service-card-body { border-color: var(--taupe); }
-  .service-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.75rem;
-    color: var(--taupe);
-    letter-spacing: 0.15em;
-    margin-bottom: 8px;
-    display: block;
-  }
-  .service-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.35rem;
-    font-weight: 400;
-    color: var(--deep);
-    margin-bottom: 10px;
-    line-height: 1.2;
-  }
-  .service-desc {
-    font-size: 0.73rem;
-    font-weight: 300;
-    color: var(--light-text);
-    line-height: 1.7;
-  }
-  .service-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 14px;
-    font-size: 0.62rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--bronze);
-    text-decoration: none;
-    transition: gap 0.3s;
-  }
-  .service-link:hover { gap: 14px; }
-  .service-link::after { content: '→'; }
-
-  #process {
-    background: var(--deep);
-    color: var(--cream);
-    padding: 120px 80px;
-    position: relative;
-    overflow: hidden;
-  }
-  #process .section-title { color: var(--cream); }
-  .process-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 40px;
-    margin-top: 70px;
-  }
-  .process-step { position: relative; padding-top: 30px; }
-  .process-step::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 40px; height: 1px;
-    background: var(--taupe);
-  }
-  .step-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 4rem;
-    font-weight: 300;
-    color: rgba(227,166,186,0.23);
-    line-height: 1;
-    margin-bottom: 16px;
-  }
-  .step-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem;
-    font-weight: 400;
-    color: var(--cream);
-    margin-bottom: 12px;
-  }
-  .step-desc {
-    font-size: 0.75rem;
-    font-weight: 300;
-    color: rgba(255,241,245,0.7);
-    line-height: 1.8;
-  }
-
-  #gallery {
-    padding: 0;
-    display: flex;
-    height: 420px;
-    overflow: hidden;
-  }
-  .gallery-img { flex: 1; overflow: hidden; position: relative; transition: flex 0.6s cubic-bezier(0.4,0,0.2,1); }
-  #gallery:hover .gallery-img { flex: 0.6; }
-  #gallery .gallery-img:hover { flex: 2.5; }
-  .gallery-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s ease;
-    filter: brightness(0.75) saturate(0.7);
-  }
-  .gallery-caption {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
-    padding: 30px 20px 18px;
-    color: var(--cream);
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-  }
-
-  #testimonials {
-    background: var(--cream);
-    padding: 110px 80px;
-    text-align: center;
-  }
-  .testimonials-wrap {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-    margin-top: 60px;
-  }
-  .testimonial {
-    background: var(--warm-white);
-    padding: 40px 34px;
-    position: relative;
-    border: 1px solid var(--sand);
-  }
-  .testimonial-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem;
-    font-weight: 300;
-    font-style: italic;
-    color: var(--mid);
-    line-height: 1.7;
-    margin-bottom: 26px;
-  }
-  .testimonial-author {
-    font-size: 0.62rem;
-    font-weight: 500;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--taupe);
-  }
-  .stars { color: var(--taupe); font-size: 0.75rem; margin-bottom: 14px; letter-spacing: 3px; }
-
-  #booking {
-    background: linear-gradient(135deg, var(--mid) 0%, var(--deep) 100%);
-    padding: 110px 80px;
-    position: relative;
-    overflow: hidden;
-  }
-  .booking-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-  }
-  .booking-left .section-title { color: var(--cream); }
-  .booking-left .section-desc { color: rgba(255,241,245,0.75); }
-  .booking-perks {
-    margin-top: 36px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-  .perk {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    font-size: 0.78rem;
-    font-weight: 300;
-    color: rgba(255,241,245,0.86);
-    letter-spacing: 0.05em;
-  }
-  .perk-icon {
-    width: 34px; height: 34px;
-    border: 1px solid rgba(227,166,186,0.55);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--taupe);
-    flex-shrink: 0;
-  }
-  .booking-form {
-    background: var(--warm-white);
-    padding: 48px 44px;
-  }
-  .form-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5rem;
-    font-weight: 400;
-    color: var(--deep);
-    margin-bottom: 30px;
-  }
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-  .form-group { margin-bottom: 18px; }
-  .form-group label {
-    display: block;
-    font-size: 0.6rem;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--light-text);
-    margin-bottom: 8px;
-  }
-  .form-group input, .form-group select, .form-group textarea {
-    width: 100%;
-    padding: 13px 16px;
-    border: 1px solid var(--sand);
-    background: var(--warm-white);
-    font-family: 'Jost', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 300;
-    color: var(--deep);
-    outline: none;
-    transition: border-color 0.3s;
-    appearance: none;
-  }
-  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--taupe); }
-  .form-group textarea { resize: vertical; min-height: 90px; }
-  .form-submit {
-    width: 100%;
-    padding: 16px;
-    background: var(--deep);
-    color: var(--warm-white);
-    border: none;
-    font-family: 'Jost', sans-serif;
-    font-size: 0.68rem;
-    font-weight: 500;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background 0.3s;
-    margin-top: 8px;
-  }
-  .form-submit:hover { background: var(--bronze); }
-
-  #faq { background: var(--warm-white); padding: 110px 80px; }
-  .faq-inner { display: grid; grid-template-columns: 1fr 2fr; gap: 80px; align-items: start; }
-  .faq-item { border-bottom: 1px solid var(--sand); padding: 22px 0; cursor: pointer; }
-  .faq-question {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: var(--deep);
-    gap: 20px;
-  }
-  .faq-toggle { font-size: 1.2rem; color: var(--taupe); transition: transform 0.3s; flex-shrink: 0; }
-  .faq-item.open .faq-toggle { transform: rotate(45deg); }
-  .faq-answer {
-    font-size: 0.78rem;
-    font-weight: 300;
-    color: var(--light-text);
-    line-height: 1.85;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease, padding 0.3s;
-  }
-  .faq-item.open .faq-answer { max-height: 300px; padding-top: 14px; }
-
-  footer {
-    background: var(--deep);
-    color: var(--cream);
-    padding: 80px 80px 40px;
-  }
-  .footer-top {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 60px;
-    padding-bottom: 60px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-  }
-  .footer-brand {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem;
-    font-weight: 300;
-    letter-spacing: 0.1em;
-    margin-bottom: 18px;
-  }
-  .footer-tagline {
-    font-size: 0.75rem;
-    font-weight: 300;
-    color: rgba(255,241,245,0.6);
-    line-height: 1.8;
-    max-width: 260px;
-  }
-  .footer-social { display: flex; gap: 14px; margin-top: 28px; }
-  .social-btn {
-    width: 36px; height: 36px;
-    border: 1px solid rgba(255,255,255,0.18);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.75rem;
-    color: rgba(255,255,255,0.6);
-    text-decoration: none;
-  }
-  .footer-col h5 {
-    font-size: 0.6rem;
-    font-weight: 500;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--taupe);
-    margin-bottom: 22px;
-  }
-  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 11px; }
-  .footer-col a {
-    font-size: 0.76rem;
-    font-weight: 300;
-    color: rgba(255,241,245,0.6);
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-  .footer-col a:hover { color: var(--cream); }
-  .footer-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 30px;
-  }
-  .footer-copy { font-size: 0.65rem; color: rgba(255,241,245,0.35); letter-spacing: 0.1em; }
-
-  .wa-float {
-    position: fixed;
-    bottom: 36px;
-    right: 36px;
-    z-index: 200;
-    width: 52px; height: 52px;
-    background: #25d366;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
-    text-decoration: none;
-    font-size: 1.4rem;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  .wa-float:hover { transform: scale(1.1); }
-
-  @media (max-width: 1000px) {
-    nav { padding: 18px 24px; }
-    .nav-links { display: none; }
-    section { padding: 70px 24px; }
-    #about { grid-template-columns: 1fr; padding: 70px 24px; gap: 40px; }
-    .about-badge { right: 0; bottom: -20px; }
-    #hero { min-height: 100svh; }
-    .services-grid, .services-grid-2 { grid-template-columns: 1fr 1fr; }
-    .process-grid { grid-template-columns: 1fr 1fr; }
-    .booking-inner { grid-template-columns: 1fr; gap: 40px; }
-    #booking { padding: 70px 24px; }
-    .faq-inner { grid-template-columns: 1fr; gap: 40px; }
-    #faq { padding: 70px 24px; }
-    footer { padding: 60px 24px 30px; }
-    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
-    #gallery { height: 260px; }
-    .testimonials-wrap { grid-template-columns: 1fr; }
-    #testimonials { padding: 70px 24px; }
-    .form-row { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 600px) {
-    .services-grid, .services-grid-2 { grid-template-columns: 1fr; }
-    .process-grid { grid-template-columns: 1fr; }
-    .footer-top { grid-template-columns: 1fr; }
-    .services-header { display:block; }
-    .services-header p { text-align:left !important; margin-top:20px; }
-    h1, .hero-title { font-size: 3.5rem; }
-  }
+:root{
+--cream:#fff1f5;
+--warm-white:#fffafd;
+--sand:#f1cbd6;
+--taupe:#e3a6ba;
+--bronze:#c76f91;
+--deep:#070607;
+--mid:#171113;
+--text:#27151c;
+--light-text:#8b6371;
+}
+body{
+margin:0;
+font-family:'Jost',sans-serif;
+background:var(--warm-white);
+color:var(--text);
+}
+header{
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+background:
+linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
+url('https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1600&q=80');
+background-size:cover;
+background-position:center;
+color:white;
+padding:20px;
+}
+.hero h1{
+font-family:'Cormorant Garamond',serif;
+font-size:72px;
+font-weight:300;
+margin:0 0 20px;
+}
+.hero p{
+font-size:18px;
+max-width:700px;
+margin:auto;
+line-height:1.7;
+}
+.btn{
+display:inline-block;
+margin-top:30px;
+padding:16px 32px;
+background:var(--taupe);
+color:white;
+text-decoration:none;
+letter-spacing:.15em;
+text-transform:uppercase;
+font-size:12px;
+}
+section{
+padding:80px 24px;
+max-width:1200px;
+margin:auto;
+}
+.section-title{
+font-family:'Cormorant Garamond',serif;
+font-size:48px;
+font-weight:300;
+margin-bottom:20px;
+}
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:24px;
+}
+.card{
+background:white;
+padding:30px;
+border-radius:12px;
+box-shadow:0 8px 24px rgba(0,0,0,.08);
+}
+.card img{
+width:100%;
+height:240px;
+object-fit:cover;
+border-radius:10px;
+margin-bottom:20px;
+}
+.card h3{
+font-family:'Cormorant Garamond',serif;
+font-size:30px;
+font-weight:400;
+margin:0 0 10px;
+}
+.card p{
+color:var(--light-text);
+line-height:1.7;
+}
+.pricing{
+background:var(--cream);
+}
+form{
+background:white;
+padding:40px;
+border-radius:16px;
+box-shadow:0 8px 24px rgba(0,0,0,.08);
+}
+input,select,textarea{
+width:100%;
+padding:14px;
+margin-bottom:18px;
+border:1px solid #ddd;
+border-radius:8px;
+font-family:'Jost',sans-serif;
+}
+button{
+width:100%;
+padding:16px;
+border:none;
+background:black;
+color:white;
+font-size:14px;
+letter-spacing:.15em;
+text-transform:uppercase;
+cursor:pointer;
+}
+footer{
+background:black;
+color:white;
+padding:60px 24px;
+text-align:center;
+}
+footer a{
+color:white;
+}
+@media(max-width:768px){
+.hero h1{
+font-size:48px;
+}
+.section-title{
+font-size:38px;
+}
+}
 </style>
 </head>
 <body>
 
-<nav id="navbar">
-  <a href="#hero" class="nav-logo">VSculpted</a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#pricing">Packages</a></li>
-    <li><a href="#faq">FAQ</a></li>
-  </ul>
-  <a href="#booking" class="nav-cta">Book Now</a>
-</nav>
-
-<section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <span class="hero-eyebrow">Luxury Mobile Body Sculpting</span>
-    <h1 class="hero-title">Sculpt Your<br><em>Best Self</em></h1>
-    <p class="hero-subtitle">Black + blush luxury body contouring designed for confidence, curves, and a soft sculpted glow.</p>
-    <div class="hero-btns">
-      <a href="#booking" class="btn-primary">Book a Consultation</a>
-      <a href="#services" class="btn-ghost">Explore Services</a>
-    </div>
-  </div>
-</section>
-
-<section id="about">
-  <div class="about-image-wrap">
-    <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=900&q=80" alt="Body sculpting studio" loading="lazy"/>
-    <div class="about-badge">
-      <span class="num">8</span>
-      <span class="lbl">Signature<br>Treatments</span>
-    </div>
-  </div>
-  <div class="about-text">
-    <span class="section-label">About VSculpted</span>
-    <h2 class="section-title">Scottsdale-Inspired<br><em>Body Sculpting</em></h2>
-    <p class="section-desc">VSculpted is a luxury mobile body sculpting service created for clients who want a more contoured, confident silhouette without surgery or downtime.</p>
-    <p class="section-desc" style="margin-top:16px;">Every session is designed around your goals, your body, and your lifestyle — with treatments by appointment only for a private, elevated experience.</p>
-    <div class="about-pillars">
-      <div class="pillar"><h4>Mobile Convenience</h4><p>By appointment only with a personalized experience.</p></div>
-      <div class="pillar"><h4>Zero Downtime</h4><p>Non-invasive treatments designed for busy clients.</p></div>
-      <div class="pillar"><h4>Custom Plans</h4><p>Each service plan is quoted by treatment area and goals.</p></div>
-      <div class="pillar"><h4>Luxury Feel</h4><p>Black, blush, feminine, and results-focused.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="services">
-  <div class="services-header">
-    <div>
-      <span class="section-label">What We Offer</span>
-      <h2 class="section-title">Our <em>Signature</em> Services</h2>
-    </div>
-    <p class="section-desc" style="max-width:320px;text-align:right;">Each treatment is quoted by service, treatment area, package size, and client goals.</p>
-  </div>
-
-  <div class="services-grid">
-    <div class="service-card">
-      <img class="service-card-img" src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&q=75" alt="Lymphatic Drainage" loading="lazy"/>
-      <div class="service-card-body"><span class="service-num">01</span><h3 class="service-name">Lymphatic Drainage</h3><p class="service-desc">Gentle therapy to support circulation, reduce puffiness, and help the body feel lighter and more defined.</p><a href="#booking" class="service-link">Request Quote</a></div>
-    </div>
-    <div class="service-card">
-      <img class="service-card-img" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&q=75" alt="Ultrasound Cavitation" loading="lazy"/>
-      <div class="service-card-body"><span class="service-num">02</span><h3 class="service-name">Ultrasound Cavitation</h3><p class="service-desc">Non-invasive treatment used to target stubborn areas and support inch-loss goals.</p><a href="#booking" class="service-link">Request Quote</a></div>
-    </div>
-    <div class="service-card">
-      <img class="service-card-img" src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=75" alt="Laser Lipo" loading="lazy"/>
-      <div class="service-card-body"><span class="service-num">03</span><h3 class="service-name">Laser Lipo</h3><p class="service-desc">Low-level laser contouring for clients wanting a slimmer, more sculpted look.</p><a href="#booking" class="service-link">Request Quote</a></div>
-    </div>
-    <div class="service-card">
-      <img class="service-card-img" src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=600&q=75" alt="Vacuum Therapy" loading="lazy"/>
-      <div class="service-card-body"><span class="service-num">04</span><h3 class="service-name">Vacuum Therapy</h3><p class="service-desc">Suction-based treatment to help lift, tone, and shape targeted areas.</p><a href="#booking" class="service-link">Request Quote</a></div>
-    </div>
-  </div>
-
-  <div class="services-grid-2">
-    <div class="service-card">
-      <img class="service-card-img" src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600&q=75" alt="RF Skin Tightening" loading="lazy"/>
-      <div class="service-card-body"><span class="service-num">05</span><h3 class="service-name">RF Skin Tightening</h3><p class="service-desc">Radiofrequency treatment designed to support firmness, tightening, and smoother-looking skin.</p><a href="#booking" class="service-link">Request Quote</a></div>
-    </div>
-    <div class="service-card">
-      <img class="service-card-img" src="https://images.unsplash.com/photo-1601904478027-60b03a67f78a?w=600&q=75" alt="Wood Therapy" loading="lazy"/>
-      <div class="service-card-body"><span class="service-num">06</span><h3 class="service-name">Wood Therapy</h3><p class="service-desc">A sculpting technique using contoured wooden tools to smooth, define, and support body contouring goals.</p><a href="#booking" class="service-link">Request Quote</a></div>
-    </div>
-    <div class="service-card">
-      <img class="service-card-img" src="https://images.unsplash.com/photo-1591343395082-e120087004b4?w=600&q=75" alt="Post-op Care" loading="lazy"/>
-      <div class="service-card-body"><span class="service-num">07</span><h3 class="service-name">Post-Op Care</h3><p class="service-desc">Supportive post-op services including lymphatic-style care to help clients feel more comfortable during recovery.</p><a href="#booking" class="service-link">Request Quote</a></div>
-    </div>
-    <div class="service-card">
-      <img class="service-card-img" src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=75" alt="Client Consultation" loading="lazy"/>
-      <div class="service-card-body"><span class="service-num">08</span><h3 class="service-name">Client Consultation</h3><p class="service-desc">A personalized consultation to review goals, treatment options, and package recommendations.</p><a href="#booking" class="service-link">Book Consult</a></div>
-    </div>
-  </div>
-</section>
-
-<section id="pricing">
-  <div class="services-header">
-    <div>
-      <span class="section-label">Investment</span>
-      <h2 class="section-title">Packages Designed for<br><em>Real Results</em></h2>
-    </div>
-    <p class="section-desc" style="max-width:360px;text-align:right;">Pricing is customized by service, treatment area, and goals. Final quote is provided after consultation.</p>
-  </div>
-  <div class="services-grid">
-    <div class="service-card"><div class="service-card-body"><span class="service-num">STARTER</span><h3 class="service-name">Glow Consultation</h3><p class="service-desc">Body analysis, goal review, and custom sculpting plan.</p><p class="service-desc"><strong>Free first-time consult</strong></p><a href="#booking" class="service-link">Request Quote</a></div></div>
-    <div class="service-card"><div class="service-card-body"><span class="service-num">PACKAGE</span><h3 class="service-name">Sculpted Start</h3><p class="service-desc">Great for clients wanting to try body contouring and begin inch-loss treatments.</p><p class="service-desc"><strong>Sample: 4 sessions starting around $299–$499</strong></p><a href="#booking" class="service-link">Request Quote</a></div></div>
-    <div class="service-card"><div class="service-card-body"><span class="service-num">POPULAR</span><h3 class="service-name">The Snatched Plan</h3><p class="service-desc">A multi-session body sculpting package combining cavitation, RF, lymphatic, or wood therapy.</p><p class="service-desc"><strong>Sample: 8 sessions starting around $599–$899</strong></p><a href="#booking" class="service-link">Request Quote</a></div></div>
-    <div class="service-card"><div class="service-card-body"><span class="service-num">MEMBERSHIP</span><h3 class="service-name">VSculpted Elite</h3><p class="service-desc">Monthly maintenance for clients who want consistent sculpting, tightening, and lymphatic care.</p><p class="service-desc"><strong>Sample: $149–$249/month</strong></p><a href="#booking" class="service-link">Join Waitlist</a></div></div>
-  </div>
-</section>
-
-<section id="process">
-  <span class="section-label" style="color:var(--taupe)">How It Works</span>
-  <h2 class="section-title">Your Journey to<br><em>Transformation</em></h2>
-  <div class="process-grid">
-    <div class="process-step"><div class="step-num">01</div><h3 class="step-title">Consultation</h3><p class="step-desc">We start with your goals, treatment areas, lifestyle, and questions.</p></div>
-    <div class="process-step"><div class="step-num">02</div><h3 class="step-title">Custom Quote</h3><p class="step-desc">You receive a package recommendation based on your needs.</p></div>
-    <div class="process-step"><div class="step-num">03</div><h3 class="step-title">Treatment Plan</h3><p class="step-desc">Book by appointment and begin your sculpting sessions.</p></div>
-    <div class="process-step"><div class="step-num">04</div><h3 class="step-title">Maintain Results</h3><p class="step-desc">Choose maintenance sessions or membership options as needed.</p></div>
-  </div>
-</section>
-
-<div id="gallery">
-  <div class="gallery-img"><img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&q=75" alt="Before photos coming soon" loading="lazy"/><div class="gallery-caption">Before Photos Coming Soon</div></div>
-  <div class="gallery-img"><img src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?w=600&q=75" alt="After photos coming soon" loading="lazy"/><div class="gallery-caption">After Photos Coming Soon</div></div>
-  <div class="gallery-img"><img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=75" alt="Results coming soon" loading="lazy"/><div class="gallery-caption">Client Results Coming Soon</div></div>
-  <div class="gallery-img"><img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=75" alt="Treatment room coming soon" loading="lazy"/><div class="gallery-caption">Treatment Room Coming Soon</div></div>
-  <div class="gallery-img"><img src="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=600&q=75" alt="VSculpted experience" loading="lazy"/><div class="gallery-caption">VSculpted Experience</div></div>
+<header>
+<div class="hero">
+<div style="letter-spacing:.3em;font-size:12px;text-transform:uppercase;color:#e3a6ba;margin-bottom:20px;">
+Luxury Body Sculpting
 </div>
 
-<section id="testimonials">
-  <span class="section-label" style="display:block;text-align:center">Client Love</span>
-  <h2 class="section-title" style="text-align:center">Real Results,<br><em>Real Stories</em></h2>
-  <div class="testimonials-wrap">
-    <div class="testimonial"><div class="stars">★★★★★</div><p class="testimonial-text">After just 6 sessions, I felt so much more confident and sculpted. VSculpted gave me exactly the luxury experience I wanted.</p><span class="testimonial-author">— Monique T.</span></div>
-    <div class="testimonial"><div class="stars">★★★★★</div><p class="testimonial-text">The post-op care was so comforting. Professional, soft, and very detail-oriented.</p><span class="testimonial-author">— Jasmine R.</span></div>
-    <div class="testimonial"><div class="stars">★★★★★</div><p class="testimonial-text">The wood therapy and sculpting package made me feel amazing. I love the feminine luxury vibe.</p><span class="testimonial-author">— Aaliyah S.</span></div>
-  </div>
+<h1>VSculpted</h1>
+
+<p>
+Luxury body contouring designed for confidence, curves, and a soft sculpted glow.
+</p>
+
+<a class="btn" href="#booking">Book Consultation</a>
+</div>
+</header>
+
+<section>
+<h2 class="section-title">About VSculpted</h2>
+
+<p style="max-width:700px;line-height:1.9;color:var(--light-text);">
+VSculpted is a luxury body sculpting service created for clients who want a more contoured, confident silhouette without surgery or downtime.
+</p>
+</section>
+
+<section>
+<h2 class="section-title">Signature Services</h2>
+
+<div class="grid">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=700&q=80">
+<h3>Lymphatic Drainage</h3>
+<p>Reduce puffiness, support circulation, and sculpt a slimmer silhouette.</p>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=700&q=80">
+<h3>Ultrasound Cavitation</h3>
+<p>Non-invasive contouring designed to target stubborn treatment areas.</p>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1601904478027-60b03a67f78a?w=700&q=80">
+<h3>Wood Therapy</h3>
+<p>Natural sculpting therapy to smooth, tone, and contour the body.</p>
+</div>
+
+</div>
+</section>
+
+<section class="pricing">
+<h2 class="section-title">Membership Packages</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Glow Consultation</h3>
+<p>Free first-time consultation and personalized treatment plan.</p>
+</div>
+
+<div class="card">
+<h3>Sculpted Start</h3>
+<p>4 sessions starting around $299–$499.</p>
+</div>
+
+<div class="card">
+<h3>The Snatched Plan</h3>
+<p>8 sessions starting around $599–$899.</p>
+</div>
+
+<div class="card">
+<h3>VSculpted Elite</h3>
+<p>$149–$249 monthly maintenance membership.</p>
+</div>
+
+</div>
+</section>
+
+<section>
+<h2 class="section-title">Before & After Gallery</h2>
+
+<div class="grid">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=700&q=80">
+<p>Before Photos Coming Soon</p>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?w=700&q=80">
+<p>After Photos Coming Soon</p>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=700&q=80">
+<p>Client Results Coming Soon</p>
+</div>
+
+</div>
 </section>
 
 <section id="booking">
-  <div class="booking-inner">
-    <div class="booking-left">
-      <span class="section-label">Reserve Your Spot</span>
-      <h2 class="section-title">Begin Your<br><em>Sculpting Journey</em></h2>
-      <p class="section-desc">Submit your appointment request below. VSculpted is mobile for now and available by appointment only.</p>
-      <div class="booking-perks">
-        <div class="perk"><div class="perk-icon">✦</div> Free first-time consultation</div>
-        <div class="perk"><div class="perk-icon">✦</div> Mobile appointments by request</div>
-        <div class="perk"><div class="perk-icon">✦</div> Custom quote by service and treatment area</div>
-        <div class="perk"><div class="perk-icon">✦</div> Call, email, or WhatsApp available</div>
-      </div>
-    </div>
+<h2 class="section-title">Book Your Appointment</h2>
 
-    <form class="booking-form" name="appointment-request" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-      <input type="hidden" name="form-name" value="appointment-request">
-      <p style="display:none;"><label>Don’t fill this out: <input name="bot-field"></label></p>
-      <h3 class="form-title">Book Your Appointment</h3>
+<p style="max-width:700px;line-height:1.9;color:var(--light-text);margin-bottom:40px;">
+Appointments are available by request only.
+</p>
 
-      <div class="form-row">
-        <div class="form-group"><label>First Name</label><input type="text" name="first_name" placeholder="Jane" required/></div>
-        <div class="form-group"><label>Last Name</label><input type="text" name="last_name" placeholder="Doe" required/></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Phone Number</label><input type="tel" name="phone" placeholder="(555) 000-0000" required/></div>
-        <div class="form-group"><label>Email Address</label><input type="email" name="email" placeholder="jane@email.com" required/></div>
-      </div>
-      <div class="form-group">
-        <label>Service of Interest</label>
-        <select name="service" required>
-          <option value="">Select a service…</option>
-          <option>Free Consultation</option>
-          <option>Lymphatic Drainage</option>
-          <option>Ultrasound Cavitation</option>
-          <option>Laser Lipo</option>
-          <option>Vacuum Therapy</option>
-          <option>RF Skin Tightening</option>
-          <option>Wood Therapy</option>
-          <option>Post-Op Care</option>
-          <option>Membership / Package Quote</option>
-        </select>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Preferred Date</label><input type="date" name="preferred_date" required/></div>
-        <div class="form-group">
-          <label>Preferred Time</label>
-          <select name="preferred_time" required>
-            <option>Morning</option>
-            <option>Afternoon</option>
-            <option>Evening</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group"><label>Additional Notes</label><textarea name="notes" placeholder="Any questions, areas of concern, or appointment notes…"></textarea></div>
-      <button class="form-submit" type="submit">Request Appointment →</button>
-    </form>
-  </div>
-</section>
+<form name="appointment-request" method="POST" data-netlify="true">
+<input type="hidden" name="form-name" value="appointment-request">
 
-<section id="faq">
-  <div class="faq-inner">
-    <div>
-      <span class="section-label">Questions</span>
-      <h2 class="section-title">Frequently<br><em>Asked</em></h2>
-      <p class="section-desc" style="margin-top:20px;">Have more questions? Reach out — we’re happy to help you find the right treatment.</p>
-      <a href="#booking" class="btn-primary" style="margin-top:30px;display:inline-block;">Contact Us</a>
-    </div>
-    <div class="faq-list">
-      <div class="faq-item open"><div class="faq-question" onclick="toggleFaq(this)">Are these treatments safe?<span class="faq-toggle">+</span></div><div class="faq-answer">Our services are non-invasive and designed for most adults, but every client completes a consultation first to make sure the treatment is a good fit.</div></div>
-      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">How much does it cost?<span class="faq-toggle">+</span></div><div class="faq-answer">Pricing depends on the service, treatment area, and package size. A custom quote is provided after consultation.</div></div>
-      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">Do you have a studio location?<span class="faq-toggle">+</span></div><div class="faq-answer">VSculpted is mobile for now and available by appointment only.</div></div>
-      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">Do you offer memberships?<span class="faq-toggle">+</span></div><div class="faq-answer">Yes, sample membership options are available for maintenance clients. Final membership options may vary based on services requested.</div></div>
-      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">How do I book?<span class="faq-toggle">+</span></div><div class="faq-answer">Submit the appointment request form, call, email, or send a WhatsApp message. All appointments are by request.</div></div>
-    </div>
-  </div>
+<input type="text" name="first_name" placeholder="First Name" required>
+
+<input type="text" name="last_name" placeholder="Last Name" required>
+
+<input type="tel" name="phone" placeholder="Phone Number" required>
+
+<input type="email" name="email" placeholder="Email Address" required>
+
+<select name="service" required>
+<option value="">Select Service</option>
+<option>Lymphatic Drainage</option>
+<option>Ultrasound Cavitation</option>
+<option>Laser Lipo</option>
+<option>Wood Therapy</option>
+<option>RF Skin Tightening</option>
+<option>Post-Op Care</option>
+<option>Membership / Package Quote</option>
+</select>
+
+<input type="date" name="preferred_date">
+
+<select name="preferred_time">
+<option>Morning</option>
+<option>Afternoon</option>
+<option>Evening</option>
+</select>
+
+<textarea name="notes" placeholder="Questions or concerns"></textarea>
+
+<button type="submit">Request Appointment</button>
+</form>
 </section>
 
 <footer>
-  <div class="footer-top">
-    <div>
-      <div class="footer-brand">VSculpted</div>
-      <p class="footer-tagline">Luxury mobile body sculpting with a black + blush feminine feel. Scottsdale-inspired, appointment-based, and designed around your goals.</p>
-      <div class="footer-social">
-        <a href="#" class="social-btn">ig</a>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h5>Services</h5>
-      <ul>
-        <li><a href="#services">Lymphatic Drainage</a></li>
-        <li><a href="#services">Ultrasound Cavitation</a></li>
-        <li><a href="#services">Laser Lipo</a></li>
-        <li><a href="#services">Vacuum Therapy</a></li>
-        <li><a href="#services">RF Skin Tightening</a></li>
-        <li><a href="#services">Wood Therapy</a></li>
-        <li><a href="#services">Post-Op Care</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h5>Studio</h5>
-      <ul>
-        <li><a href="#about">About Us</a></li>
-        <li><a href="#pricing">Packages</a></li>
-        <li><a href="#process">How It Works</a></li>
-        <li><a href="#testimonials">Reviews</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="#booking">Book Now</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h5>Contact</h5>
-      <ul>
-        <li><a href="tel:16024978704">Call Us</a></li>
-        <li><a href="mailto:Viridianjom@gmail.com">Email Us</a></li>
-        <li><a href="https://wa.me/16024978704">WhatsApp</a></li>
-        <li><a href="#">Instagram Coming Soon</a></li>
-        <li><a href="#booking">Mobile Appointments · By Appointment Only</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span class="footer-copy">© 2026 VSculpted. All rights reserved.</span>
-    <span class="footer-copy">Privacy Policy · Terms of Service</span>
-  </div>
+
+<h2 style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;">
+VSculpted
+</h2>
+
+<p style="max-width:600px;margin:20px auto;line-height:1.9;color:#ddd;">
+Luxury body sculpting with a feminine, Scottsdale-inspired feel — designed around your goals.
+</p>
+
+<p>
+📞 <a href="tel:16024978704">602-497-8704</a>
+</p>
+
+<p>
+📧 <a href="mailto:Viridianjom@gmail.com">Viridianjom@gmail.com</a>
+</p>
+
+<p>
+By Appointment Only
+</p>
+
+<p>
+<a href="https://wa.me/16024978704">Chat on WhatsApp</a>
+</p>
+
+<p>
+Instagram Coming Soon
+</p>
+
 </footer>
 
-<a href="https://wa.me/16024978704" class="wa-float" title="Chat on WhatsApp">💬</a>
-
-<script>
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 60);
-  });
-
-  function toggleFaq(el) {
-    const item = el.closest('.faq-item');
-    const wasOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-    if (!wasOpen) item.classList.add('open');
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.service-card, .process-step, .testimonial, .pillar').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(24px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(el);
-  });
-</script>
 </body>
 </html>
