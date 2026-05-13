@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VSculpted | Body Sculpting Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --cream: #f5f0ea;
+    --warm-white: #faf8f5;
+    --sand: #e8ddd0;
+    --taupe: #c4a882;
+    --bronze: #a07850;
+    --deep: #1a1410;
+    --mid: #3d2e22;
+    --text: #2a1f15;
+    --light-text: #7a6555;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--warm-white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 60px;
+    transition: background 0.4s, backdrop-filter 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(250,248,245,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--sand);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    color: var(--warm-white);
+    text-decoration: none;
+    transition: color 0.4s;
+  }
+  nav.scrolled .nav-logo { color: var(--deep); }
+
+  .nav-links {
+    display: flex;
+    gap: 38px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  nav.scrolled .nav-links a { color: var(--light-text); }
+  .nav-links a:hover { color: var(--taupe); }
+
+  .nav-cta {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 10px 26px;
+    border: 1px solid rgba(255,255,255,0.5);
+    color: var(--warm-white);
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  nav.scrolled .nav-cta {
+    border-color: var(--taupe);
+    color: var(--bronze);
+  }
+  .nav-cta:hover {
+    background: var(--taupe);
+    color: var(--warm-white) !important;
+    border-color: var(--taupe);
+  }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1800&q=80');
+    background-size: cover;
+    background-position: center 30%;
+    transform: scale(1.05);
+    animation: heroScale 8s ease-out forwards;
+  }
+  @keyframes heroScale {
+    to { transform: scale(1); }
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(20,12,5,0.55) 0%,
+      rgba(20,12,5,0.3) 50%,
+      rgba(20,12,5,0.7) 100%
+    );
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 0 30px;
+    opacity: 0;
+    animation: fadeUp 1.2s 0.4s ease forwards;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-eyebrow {
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin-bottom: 22px;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 300;
+    line-height: 1.0;
+    color: var(--warm-white);
+    letter-spacing: 0.04em;
+    margin-bottom: 28px;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--taupe);
+  }
+  .hero-subtitle {
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 50px;
+    line-height: 1.8;
+  }
+  .hero-btns {
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    padding: 16px 42px;
+    background: var(--taupe);
+    color: var(--warm-white);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--bronze); }
+  .btn-ghost {
+    padding: 16px 42px;
+    border: 1px solid rgba(255,255,255,0.45);
+    color: var(--warm-white);
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.1); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    animation: bobble 2s infinite;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+  }
+  @keyframes bobble {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 100px 60px; }
+  .section-label {
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin-bottom: 14px;
+    display: block;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--deep);
+    margin-bottom: 20px;
+  }
+  .section-title em { font-style: italic; color: var(--bronze); }
+  .section-desc {
+    font-size: 0.88rem;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--light-text);
+    max-width: 540px;
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    padding: 120px 80px;
+  }
+  .about-image-wrap {
+    position: relative;
+  }
+  .about-image-wrap img {
+    width: 100%;
+    height: 560px;
+    object-fit: cover;
+    display: block;
+  }
+  .about-badge {
+    position: absolute;
+    bottom: -24px;
+    right: -24px;
+    background: var(--taupe);
+    color: var(--warm-white);
+    padding: 30px;
+    text-align: center;
+    min-width: 140px;
+  }
+  .about-badge .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 300;
+    line-height: 1;
+    display: block;
+  }
+  .about-badge .lbl {
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-top: 6px;
+    display: block;
+  }
+  .about-text { padding-left: 10px; }
+  .about-pillars {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+  .pillar {
+    border-left: 2px solid var(--sand);
+    padding-left: 16px;
+  }
+  .pillar h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--deep);
+    margin-bottom: 6px;
+  }
+  .pillar p {
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: var(--light-text);
+    line-height: 1.6;
+  }
+
+  /* ── SERVICES ── */
+  #services {
+    background: var(--warm-white);
+    padding: 100px 60px;
+  }
+  .services-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 60px;
+    gap: 40px;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: var(--sand);
+  }
+  .service-card {
+    background: var(--warm-white);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    group: true;
+  }
+  .service-card-img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+    filter: brightness(0.92);
+  }
+  .service-card:hover .service-card-img {
+    transform: scale(1.06);
+    filter: brightness(0.75);
+  }
+  .service-card-body {
+    padding: 24px 22px 28px;
+    border-bottom: 3px solid transparent;
+    transition: border-color 0.3s;
+  }
+  .service-card:hover .service-card-body { border-color: var(--taupe); }
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    color: var(--taupe);
+    letter-spacing: 0.15em;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 400;
+    color: var(--deep);
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+  .service-desc {
+    font-size: 0.73rem;
+    font-weight: 300;
+    color: var(--light-text);
+    line-height: 1.7;
+  }
+  .service-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--bronze);
+    text-decoration: none;
+    transition: gap 0.3s;
+  }
+  .service-link:hover { gap: 14px; }
+  .service-link::after { content: '→'; }
+
+  /* second row */
+  .services-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: var(--sand);
+    margin-top: 2px;
+  }
+
+  /* ── PROCESS ── */
+  #process {
+    background: var(--deep);
+    color: var(--cream);
+    padding: 120px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  #process::before {
+    content: 'VSculpted';
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20vw;
+    font-weight: 300;
+    color: rgba(255,255,255,0.03);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 0.1em;
+  }
+  #process .section-title { color: var(--cream); }
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin-top: 70px;
+  }
+  .process-step {
+    position: relative;
+    padding-top: 30px;
+  }
+  .process-step::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 40px; height: 1px;
+    background: var(--taupe);
+  }
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-weight: 300;
+    color: rgba(196,168,130,0.2);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 12px;
+  }
+  .step-desc {
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: rgba(232,221,208,0.6);
+    line-height: 1.8;
+  }
+
+  /* ── GALLERY STRIP ── */
+  #gallery {
+    padding: 0;
+    display: flex;
+    height: 420px;
+    overflow: hidden;
+  }
+  .gallery-img {
+    flex: 1;
+    overflow: hidden;
+    cursor: pointer;
+    transition: flex 0.6s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+  }
+  #gallery:hover .gallery-img { flex: 0.6; }
+  #gallery .gallery-img:hover { flex: 2.5; }
+  .gallery-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    filter: brightness(0.8) saturate(0.7);
+  }
+  .gallery-img:hover img {
+    transform: scale(1.05);
+    filter: brightness(0.85) saturate(1);
+  }
+  .gallery-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(20,12,5,0.8), transparent);
+    padding: 30px 20px 18px;
+    color: var(--cream);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .gallery-img:hover .gallery-caption { opacity: 1; }
+
+  /* ── TESTIMONIALS ── */
+  #testimonials {
+    background: var(--cream);
+    padding: 110px 80px;
+    text-align: center;
+  }
+  .testimonials-wrap {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 60px;
+  }
+  .testimonial {
+    background: var(--warm-white);
+    padding: 40px 34px;
+    position: relative;
+  }
+  .testimonial::before {
+    content: '"';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem;
+    color: var(--sand);
+    position: absolute;
+    top: 10px; left: 28px;
+    line-height: 1;
+  }
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--mid);
+    line-height: 1.7;
+    margin-bottom: 26px;
+    position: relative;
+    z-index: 1;
+    padding-top: 20px;
+  }
+  .testimonial-author {
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--taupe);
+  }
+  .stars {
+    color: var(--taupe);
+    font-size: 0.75rem;
+    margin-bottom: 14px;
+    letter-spacing: 3px;
+  }
+
+  /* ── BOOKING ── */
+  #booking {
+    background: linear-gradient(135deg, var(--mid) 0%, var(--deep) 100%);
+    padding: 110px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  #booking::after {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(196,168,130,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .booking-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .booking-left .section-title { color: var(--cream); }
+  .booking-left .section-desc { color: rgba(232,221,208,0.7); }
+  .booking-perks {
+    margin-top: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .perk {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 0.78rem;
+    font-weight: 300;
+    color: rgba(232,221,208,0.8);
+    letter-spacing: 0.05em;
+  }
+  .perk-icon {
+    width: 34px; height: 34px;
+    border: 1px solid rgba(196,168,130,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    color: var(--taupe);
+    flex-shrink: 0;
+  }
+
+  /* Booking form */
+  .booking-form {
+    background: var(--warm-white);
+    padding: 48px 44px;
+  }
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--deep);
+    margin-bottom: 30px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .form-group {
+    margin-bottom: 18px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--light-text);
+    margin-bottom: 8px;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 13px 16px;
+    border: 1px solid var(--sand);
+    background: var(--warm-white);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: var(--deep);
+    outline: none;
+    transition: border-color 0.3s;
+    appearance: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--taupe);
+  }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+  .form-submit {
+    width: 100%;
+    padding: 16px;
+    background: var(--taupe);
+    color: var(--warm-white);
+    border: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 8px;
+  }
+  .form-submit:hover { background: var(--bronze); }
+
+  /* ── FAQ ── */
+  #faq {
+    background: var(--warm-white);
+    padding: 110px 80px;
+  }
+  .faq-inner {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .faq-list {
+    margin-top: 10px;
+  }
+  .faq-item {
+    border-bottom: 1px solid var(--sand);
+    padding: 22px 0;
+    cursor: pointer;
+  }
+  .faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--deep);
+    gap: 20px;
+  }
+  .faq-toggle {
+    font-size: 1.2rem;
+    color: var(--taupe);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+  .faq-item.open .faq-toggle { transform: rotate(45deg); }
+  .faq-answer {
+    font-size: 0.78rem;
+    font-weight: 300;
+    color: var(--light-text);
+    line-height: 1.85;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+  }
+  .faq-item.open .faq-answer {
+    max-height: 300px;
+    padding-top: 14px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--deep);
+    color: var(--cream);
+    padding: 80px 80px 40px;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    margin-bottom: 18px;
+  }
+  .footer-tagline {
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: rgba(232,221,208,0.55);
+    line-height: 1.8;
+    max-width: 260px;
+  }
+  .footer-social {
+    display: flex;
+    gap: 14px;
+    margin-top: 28px;
+  }
+  .social-btn {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .social-btn:hover { border-color: var(--taupe); color: var(--taupe); }
+  .footer-col h5 {
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin-bottom: 22px;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+  .footer-col a {
+    font-size: 0.76rem;
+    font-weight: 300;
+    color: rgba(232,221,208,0.55);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-col a:hover { color: var(--cream); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+  }
+  .footer-copy {
+    font-size: 0.65rem;
+    color: rgba(232,221,208,0.3);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── WHATSAPP FLOAT ── */
+  .wa-float {
+    position: fixed;
+    bottom: 36px;
+    right: 36px;
+    z-index: 200;
+    width: 52px; height: 52px;
+    background: #25d366;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    text-decoration: none;
+    font-size: 1.4rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.55); }
+
+  /* ── NOTIFICATION ── */
+  .notify {
+    position: fixed;
+    top: 90px;
+    right: 30px;
+    background: var(--deep);
+    color: var(--cream);
+    padding: 18px 28px;
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    z-index: 300;
+    transform: translateX(200%);
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    border-left: 3px solid var(--taupe);
+  }
+  .notify.show { transform: translateX(0); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 1000px) {
+    nav { padding: 18px 24px; }
+    .nav-links { display: none; }
+    section { padding: 70px 24px; }
+    #about { grid-template-columns: 1fr; padding: 70px 24px; gap: 40px; }
+    .about-badge { right: 0; bottom: -20px; }
+    #hero { min-height: 100svh; }
+    .services-grid, .services-grid-2 { grid-template-columns: 1fr 1fr; }
+    .process-grid { grid-template-columns: 1fr 1fr; }
+    .booking-inner { grid-template-columns: 1fr; gap: 40px; }
+    #booking { padding: 70px 24px; }
+    .faq-inner { grid-template-columns: 1fr; gap: 40px; }
+    #faq { padding: 70px 24px; }
+    footer { padding: 60px 24px 30px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+    #gallery { height: 260px; }
+    .testimonials-wrap { grid-template-columns: 1fr; }
+    #testimonials { padding: 70px 24px; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .services-grid, .services-grid-2 { grid-template-columns: 1fr; }
+    .process-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">VSculpted</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#booking" class="nav-cta">Book Now</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">Premium Body Sculpting Studio</span>
+    <h1 class="hero-title">Sculpt Your<br><em>Best Self</em></h1>
+    <p class="hero-subtitle">Non-invasive body contouring treatments tailored to<br>reveal the silhouette you've always envisioned.</p>
+    <div class="hero-btns">
+      <a href="#booking" class="btn-primary">Book a Consultation</a>
+      <a href="#services" class="btn-ghost">Explore Services</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-image-wrap">
+    <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=900&q=80" alt="Body sculpting studio" loading="lazy"/>
+    <div class="about-badge">
+      <span class="num">8</span>
+      <span class="lbl">Signature<br>Treatments</span>
+    </div>
+  </div>
+  <div class="about-text">
+    <span class="section-label">About VSculpted</span>
+    <h2 class="section-title">Where Science Meets<br><em>Artistry</em></h2>
+    <p class="section-desc">VSculpted is a boutique body sculpting studio dedicated to helping you achieve the contoured, confident silhouette you deserve — without surgery, without downtime, and without compromise.</p>
+    <p class="section-desc" style="margin-top:16px;">Each treatment is delivered by a certified specialist using the latest non-invasive technologies, in a space that feels as luxurious as the results you'll see.</p>
+    <div class="about-pillars">
+      <div class="pillar">
+        <h4>Certified Specialists</h4>
+        <p>Trained & certified in every modality we offer.</p>
+      </div>
+      <div class="pillar">
+        <h4>Zero Downtime</h4>
+        <p>Walk in, walk out — no surgery, no recovery.</p>
+      </div>
+      <div class="pillar">
+        <h4>Personalized Plans</h4>
+        <p>Every body is different; every plan is custom.</p>
+      </div>
+      <div class="pillar">
+        <h4>Visible Results</h4>
+        <p>Measurable changes that build session to session.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <div>
+      <span class="section-label">What We Offer</span>
+      <h2 class="section-title">Our <em>Signature</em> Services</h2>
+    </div>
+    <p class="section-desc" style="max-width:320px;text-align:right;">Eight distinct treatments — each one a precision tool for sculpting, toning, and transforming your body.</p>
+  </div>
+
+  <div class="services-grid">
+    <!-- 1 -->
+    <div class="service-card">
+      <img class="service-card-img" src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&q=75" alt="Lymphatic System" loading="lazy"/>
+      <div class="service-card-body">
+        <span class="service-num">01</span>
+        <h3 class="service-name">Lymphatic Drainage</h3>
+        <p class="service-desc">Gentle manual therapy that stimulates the lymphatic system, reduces puffiness, and flushes toxins for a slimmer, lighter feel.</p>
+        <a href="#booking" class="service-link">Book Service</a>
+      </div>
+    </div>
+    <!-- 2 -->
+    <div class="service-card">
+      <img class="service-card-img" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&q=75" alt="Ultrasound Cavitation" loading="lazy"/>
+      <div class="service-card-body">
+        <span class="service-num">02</span>
+        <h3 class="service-name">Ultrasound Cavitation</h3>
+        <p class="service-desc">Low-frequency ultrasound waves break down stubborn fat cells, naturally metabolized by the body — no needles, no surgery.</p>
+        <a href="#booking" class="service-link">Book Service</a>
+      </div>
+    </div>
+    <!-- 3 -->
+    <div class="service-card">
+      <img class="service-card-img" src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=75" alt="Laser Lipo" loading="lazy"/>
+      <div class="service-card-body">
+        <span class="service-num">03</span>
+        <h3 class="service-name">Laser Lipo</h3>
+        <p class="service-desc">Low-level laser therapy targets fat deposits beneath the skin, releasing stored energy and slimming targeted areas with precision.</p>
+        <a href="#booking" class="service-link">Book Service</a>
+      </div>
+    </div>
+    <!-- 4 -->
+    <div class="service-card">
+      <img class="service-card-img" src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=600&q=75" alt="Vacuum Therapy" loading="lazy"/>
+      <div class="service-card-body">
+        <span class="service-num">04</span>
+        <h3 class="service-name">Vacuum Therapy</h3>
+        <p class="service-desc">Suction-based therapy that lifts, tones, and reshapes — perfect for the buttocks, thighs, and abdomen. Lift without implants.</p>
+        <a href="#booking" class="service-link">Book Service</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="services-grid-2">
+    <!-- 5 -->
+    <div class="service-card">
+      <img class="service-card-img" src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600&q=75" alt="RF Skin Tightening" loading="lazy"/>
+      <div class="service-card-body">
+        <span class="service-num">05</span>
+        <h3 class="service-name">RF Skin Tightening</h3>
+        <p class="service-desc">Radiofrequency energy heats deep skin layers to stimulate collagen, visibly firming and tightening loose or sagging skin.</p>
+        <a href="#booking" class="service-link">Book Service</a>
+      </div>
+    </div>
+    <!-- 6 -->
+    <div class="service-card">
+      <img class="service-card-img" src="https://images.unsplash.com/photo-1601904478027-60b03a67f78a?w=600&q=75" alt="Wood Therapy" loading="lazy"/>
+      <div class="service-card-body">
+        <span class="service-num">06</span>
+        <h3 class="service-name">Wood Therapy</h3>
+        <p class="service-desc">Colombian-originated technique using contoured wooden tools to break down cellulite, mobilize fat, and sculpt the body naturally.</p>
+        <a href="#booking" class="service-link">Book Service</a>
+      </div>
+    </div>
+    <!-- 7 -->
+    <div class="service-card">
+      <img class="service-card-img" src="https://images.unsplash.com/photo-1591343395082-e120087004b4?w=600&q=75" alt="Post-op Care" loading="lazy"/>
+      <div class="service-card-body">
+        <span class="service-num">07</span>
+        <h3 class="service-name">Post-Op Care</h3>
+        <p class="service-desc">Specialized recovery treatments including lymphatic massage and ultrasound to accelerate healing and optimize surgical results.</p>
+        <a href="#booking" class="service-link">Book Service</a>
+      </div>
+    </div>
+    <!-- 8 -->
+    <div class="service-card">
+      <img class="service-card-img" src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=75" alt="Client Consultation" loading="lazy"/>
+      <div class="service-card-body">
+        <span class="service-num">08</span>
+        <h3 class="service-name">Client Consultation</h3>
+        <p class="service-desc">Your sculpting journey starts here. A personalized body analysis and custom treatment plan — free for first-time clients.</p>
+        <a href="#booking" class="service-link">Book Free Consult</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <span class="section-label" style="color:var(--taupe)">How It Works</span>
+  <h2 class="section-title">Your Journey to<br><em>Transformation</em></h2>
+  <div class="process-grid">
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <h3 class="step-title">Free Consultation</h3>
+      <p class="step-desc">We begin with a thorough body assessment and goal-setting session to design your personalized sculpting plan.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <h3 class="step-title">Custom Treatment Plan</h3>
+      <p class="step-desc">Our specialist recommends the ideal combination of services and a session schedule tailored to your specific goals.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <h3 class="step-title">Treatment Sessions</h3>
+      <p class="step-desc">Enjoy your sessions in our relaxing studio. Most treatments take 45–75 minutes with zero downtime afterward.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">04</div>
+      <h3 class="step-title">Track & Maintain</h3>
+      <p class="step-desc">We track your progress with measurements and photos, adjusting your plan as your body transforms beautifully.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<div id="gallery">
+  <div class="gallery-img">
+    <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&q=75" alt="Studio" loading="lazy"/>
+    <div class="gallery-caption">Our Studio</div>
+  </div>
+  <div class="gallery-img">
+    <img src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?w=600&q=75" alt="Treatment" loading="lazy"/>
+    <div class="gallery-caption">Body Contouring</div>
+  </div>
+  <div class="gallery-img">
+    <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=75" alt="Results" loading="lazy"/>
+    <div class="gallery-caption">Visible Results</div>
+  </div>
+  <div class="gallery-img">
+    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=75" alt="Consultation" loading="lazy"/>
+    <div class="gallery-caption">Personalized Care</div>
+  </div>
+  <div class="gallery-img">
+    <img src="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=600&q=75" alt="Wellness" loading="lazy"/>
+    <div class="gallery-caption">Luxury Experience</div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <span class="section-label" style="display:block;text-align:center">Client Love</span>
+  <h2 class="section-title" style="text-align:center">Real Results,<br><em>Real Stories</em></h2>
+  <div class="testimonials-wrap">
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">After just 6 sessions of cavitation and RF, I lost 3 inches off my waist. VSculpted changed my confidence completely. I finally feel like myself again.</p>
+      <span class="testimonial-author">— Monique T.</span>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">The post-op lymphatic massages after my BBL were incredible. My swelling went down so fast and my results are 10/10. This team is pure magic.</p>
+      <span class="testimonial-author">— Jasmine R.</span>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">The wood therapy was something I'd never tried before — and wow. My cellulite visibly reduced after 4 sessions. I'm a client for life now.</p>
+      <span class="testimonial-author">— Aaliyah S.</span>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div class="booking-inner">
+    <div class="booking-left">
+      <span class="section-label">Reserve Your Spot</span>
+      <h2 class="section-title">Begin Your<br><em>Sculpting Journey</em></h2>
+      <p class="section-desc">Whether you're ready to book a specific treatment or want to start with a free consultation, we're here to guide you every step of the way.</p>
+      <div class="booking-perks">
+        <div class="perk">
+          <div class="perk-icon">✦</div>
+          Free initial body consultation
+        </div>
+        <div class="perk">
+          <div class="perk-icon">✦</div>
+          Flexible scheduling — evenings & weekends
+        </div>
+        <div class="perk">
+          <div class="perk-icon">✦</div>
+          Personalized treatment packages available
+        </div>
+        <div class="perk">
+          <div class="perk-icon">✦</div>
+          No surgery, no downtime, real results
+        </div>
+      </div>
+    </div>
+    <div class="booking-form">
+      <h3 class="form-title">Book Your Appointment</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="Jane"/>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Doe"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="(555) 000-0000"/>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="jane@email.com"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Service of Interest</label>
+        <select>
+          <option value="">Select a service…</option>
+          <option>Free Consultation</option>
+          <option>Lymphatic Drainage</option>
+          <option>Ultrasound Cavitation</option>
+          <option>Laser Lipo</option>
+          <option>Vacuum Therapy</option>
+          <option>RF Skin Tightening</option>
+          <option>Wood Therapy</option>
+          <option>Post-Op Care</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Preferred Date</label>
+          <input type="date"/>
+        </div>
+        <div class="form-group">
+          <label>Preferred Time</label>
+          <select>
+            <option>Morning (9am–12pm)</option>
+            <option>Afternoon (12pm–4pm)</option>
+            <option>Evening (4pm–7pm)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Additional Notes</label>
+        <textarea placeholder="Any health details, questions, or areas of concern…"></textarea>
+      </div>
+      <button class="form-submit" onclick="submitBooking()">Request Appointment →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="faq-inner">
+    <div>
+      <span class="section-label">Questions</span>
+      <h2 class="section-title">Frequently<br><em>Asked</em></h2>
+      <p class="section-desc" style="margin-top:20px;">Have more questions? Reach out — we're happy to help you find the right treatment.</p>
+      <a href="#booking" class="btn-primary" style="margin-top:30px;display:inline-block;">Contact Us</a>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item open">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Are these treatments safe?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">Yes — all of our treatments are FDA-cleared non-invasive technologies. They are safe for most adults and have been used worldwide for years. We conduct a thorough health intake before every session to ensure the right fit for you.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          How many sessions will I need?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">Results vary based on your goals and body. Most clients see visible changes after 3–6 sessions, with optimal results after a full package of 8–12 sessions. We'll create a personalized plan during your consultation.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Is there any downtime after treatments?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">None. Our treatments are completely non-invasive — you can return to your normal activities immediately. Many clients come in on their lunch break!</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          What areas of the body can be treated?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">We treat the abdomen, flanks (love handles), thighs, arms, back, buttocks, and more. Our specialist will identify the best target areas based on your body goals during consultation.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Do you offer package deals?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">Absolutely. We offer single sessions as well as multi-session packages with savings of up to 20%. Custom bundles combining multiple services are also available. Ask us during your free consultation.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Who is a good candidate for body sculpting?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">Our treatments are ideal for adults who are at or near their healthy weight but struggle with stubborn fat pockets, cellulite, loose skin, or want to refine and tone specific areas. They are not a substitute for significant weight loss.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">VSculpted</div>
+      <p class="footer-tagline">Your destination for non-invasive body sculpting, contouring, and transformation. Science-backed. Results-driven. You-focused.</p>
+      <div class="footer-social">
+        <a href="#" class="social-btn">ig</a>
+        <a href="#" class="social-btn">fb</a>
+        <a href="#" class="social-btn">tk</a>
+        <a href="#" class="social-btn">yt</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="#services">Lymphatic Drainage</a></li>
+        <li><a href="#services">Ultrasound Cavitation</a></li>
+        <li><a href="#services">Laser Lipo</a></li>
+        <li><a href="#services">Vacuum Therapy</a></li>
+        <li><a href="#services">RF Skin Tightening</a></li>
+        <li><a href="#services">Wood Therapy</a></li>
+        <li><a href="#services">Post-Op Care</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Studio</h5>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#process">How It Works</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#booking">Book Now</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="tel:">Call Us</a></li>
+        <li><a href="mailto:">Email Us</a></li>
+        <li><a href="#">Instagram DM</a></li>
+        <li><a href="#">WhatsApp</a></li>
+        <li><a href="#">Location & Hours</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 VSculpted. All rights reserved.</span>
+    <span class="footer-copy">Privacy Policy · Terms of Service</span>
+  </div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/" class="wa-float" title="Chat on WhatsApp">💬</a>
+
+<!-- Notification -->
+<div class="notify" id="notify">✓ &nbsp;Your request has been received! We'll be in touch shortly.</div>
+
+<script>
+  // Nav scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // FAQ toggle
+  function toggleFaq(el) {
+    const item = el.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+
+  // Form submit
+  function submitBooking() {
+    const notify = document.getElementById('notify');
+    notify.classList.add('show');
+    setTimeout(() => notify.classList.remove('show'), 4000);
+  }
+
+  // Fade-in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.service-card, .process-step, .testimonial, .pillar').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
